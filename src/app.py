@@ -29,6 +29,6 @@ def echo_input():
         .echo-container { margin: 100px auto; width: 300px; padding: 10px; background-color: #4CAF50; color: white; text-align: center; }
     </style>
     <div class="echo-container">
-        You entered: {}
+        You entered: ''' + input_text + '''
     </div>
-    '''.format(input_text)
+    '''
