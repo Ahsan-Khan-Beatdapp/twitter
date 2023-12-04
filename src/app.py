@@ -23,4 +23,12 @@ def main():
 @app.route("/echo_user_input", methods=["POST"])
 def echo_input():
     input_text = request.form.get("user_input", "")
-    return "You entered: " + input_text
+    return '''
+    <style>
+        body { background-color: #fafafa; font-family: Arial, sans-serif; }
+        .echo-container { margin: 100px auto; width: 300px; padding: 10px; background-color: #4CAF50; color: white; text-align: center; }
+    </style>
+    <div class="echo-container">
+        You entered: {}
+    </div>
+    '''.format(input_text)
