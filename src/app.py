@@ -26,10 +26,12 @@ def echo_input():
     return '''
     <style>
         body { background-color: #fafafa; font-family: Arial, sans-serif; }
-        .echo-container { margin: 100px auto; width: 300px; padding: 10px; background-color: #4CAF50; color: white; text-align: center; }
+        .echo-container { margin: 100px auto; width: 300px; padding: 20px; background-color: #4CAF50; color: white; text-align: center; }
         .echo-text { font-size: 20px; color: white; }
+        .user-output { font-size: 24px; color: white; font-weight: bold; }
     </style>
     <div class="echo-container">
-        <p class="echo-text">You entered: ''' + input_text + '''</p>
+        <p class="echo-text">You entered:</p>
+        <p class="user-output">''' + input_text + '''</p>
     </div>
     '''
