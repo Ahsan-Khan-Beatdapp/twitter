@@ -1,7 +1,10 @@
+# Using python raw reddit api library to fetch data from reddit and store it in a database
+# Using SQLite3 to create a database and store the data
 import praw
 import sqlite3
+import pandas as pd
 
-# Your existing PRAW setup
+# Reddit API credentials
 reddit = praw.Reddit(
     client_id="nkz3_hdkPvfyLdA3USbrSg",
     client_secret="joCDWyS5B5yBOKGZyBYdPKuwAyc_JA",
@@ -11,7 +14,6 @@ reddit = praw.Reddit(
 # Get posts from subreddit
 posts = reddit.subreddit("raptors").new(limit=10)
 
-import pandas as pd
 
 # Connect to the database
 conn = sqlite3.connect('posts.db')
