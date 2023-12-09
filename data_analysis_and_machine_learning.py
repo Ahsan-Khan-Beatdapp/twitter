@@ -6,15 +6,14 @@ import pandas as pd
 def calculate_average_sentiment(team_db):
     # Connect to the database
     conn = sqlite3.connect(team_db)
-    # Load the posts into a DataFrame
-    df = pd.read_sql_query("SELECT * FROM posts", conn)
+    # Fetch the posts
+    cursor = conn.cursor()
+    cursor.execute("SELECT post_text FROM posts")
+    posts = [row[0] for row in cursor.fetchall()]
 
     # Initialize the sentiment analysis pipeline
     nlp = pipeline('sentiment-analysis')
 
-    # Perform sentiment analysis on each post and store the results
-    sentiment_scores = []
-    posts = df['post_text'].tolist()
     # Define a batch size
     batch_size = 100
 
@@ -30,11 +29,6 @@ def calculate_average_sentiment(team_db):
             score = (score + 100) / 2
             sentiment_scores.append(score)
 
-    # Calculate the average sentiment score
-    if len(sentiment_scores) > 0:
-        average_score = sum(sentiment_scores) / len(sentiment_scores)
-        return average_score
-    else:
-        print("No posts were processed.")
-        return None
+    # Calculate and return the average sentiment score
+    return sum(sentiment_scores) / len(sentiment_scores)
 
