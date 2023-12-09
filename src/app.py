@@ -30,6 +30,8 @@ def main():
         </form>
         '''
 
+from datetime import datetime
+
 @app.route("/echo_user_input")
 def echo_input():
     team_db = request.args.get('team_db', "")
@@ -37,16 +39,22 @@ def echo_input():
 
     # Calculate the average sentiment score
     score = calculate_average_sentiment(team_db)
+
+    # Get the current date
+    today = datetime.now().strftime('%Y-%m-%d')
+
     return f'''
     <style>
         body {{ background-color: #fafafa; font-family: Arial, sans-serif; }}
         div {{ margin: 100px auto; width: 300px; text-align: center; }}
         .score {{ font-size: 2em; color: #4CAF50; }}
         .team-name {{ font-size: 1.5em; color: #3F51B5; font-weight: bold; }}
+        .date {{ font-size: 1em; color: #9E9E9E; }}
     </style>
     <div>
         <p class="team-name">{team_name.capitalize()} Fan Happiness Level:</p>
         <p class="score">{score}</p>
+        <p class="date">Analysis Date: {today}</p>
     </div>
     '''
 
