@@ -1,22 +1,11 @@
 #!/usr/bin/env python3
-
-from flask import Flask, request
+import sqlite3
+import pandas as pd
+from flask import Flask, request, redirect, url_for
 from data_analysis_and_machine_learning import calculate_average_sentiment
 
 app = Flask(__name__)
 
-# Connect to the database
-conn = sqlite3.connect('posts.db')
-
-# Fetch the post_text data
-df = pd.read_sql_query("SELECT post_text FROM posts", conn)
-
-# Close the database connection
-conn.close()
-
-# Calculate the average sentiment score
-average_score = calculate_average_sentiment(df)
-print(f'The average sentiment score is {average_score}')
 
 @app.route("/", methods=["GET", "POST"])
 def main():
@@ -45,7 +34,18 @@ def main():
 @app.route("/echo_user_input")
 def echo_input():
     team_db = request.args.get('team_db', "")
-    score = calculate_average_sentiment(team_db)
+    
+    # Connect to the database
+    conn = sqlite3.connect(team_db)
+
+    # Fetch the post_text data
+    df = pd.read_sql_query("SELECT post_text FROM posts", conn)
+
+    # Close the database connection
+    conn.close()
+
+    # Calculate the average sentiment score
+    score = calculate_average_sentiment(df)
     # Rest of your code...
     return f'''
     <style>
@@ -58,5 +58,8 @@ def echo_input():
         <p class="score">{score}</p>
     </div>
     '''
+
+
+
 
 
