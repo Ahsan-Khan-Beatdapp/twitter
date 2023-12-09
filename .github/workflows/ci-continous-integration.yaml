@@ -24,6 +24,4 @@ jobs:
           destination_branch: "production"
           pr_title: "Merge main into production"
           pr_body: "Auto-generated PR to merge main into production"
-          pr_reviewer: "username1,username2" # Optional: Add reviewers if needed
-          pr_label: "automerge" # Optional: Add labels if needed
           github_token: ${{ secrets.GITHUB_TOKEN }}
