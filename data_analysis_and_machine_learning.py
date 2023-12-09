@@ -12,6 +12,9 @@ def calculate_average_sentiment(team_db):
     # Initialize the sentiment analysis pipeline
     nlp = pipeline('sentiment-analysis')
 
+    # Perform sentiment analysis on each post and store the results
+    sentiment_scores = []
+    posts = df['post_text'].tolist()
     # Define a batch size
     batch_size = 100
 
