@@ -37,6 +37,10 @@ def echo_input():
     team_db = f"{team}.db"
 
     # Calculate the average sentiment score
+    print(team_db)
+    print(type(team_db)))
+
+    team_db = str(team_db)
     score = calculate_average_sentiment(team_db)
     # Rest of your code...
     return f'''
