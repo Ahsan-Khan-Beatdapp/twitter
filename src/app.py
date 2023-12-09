@@ -6,7 +6,17 @@ from data_analysis_and_machine_learning import calculate_average_sentiment
 from transformers import pipeline
 
 # Load the model 
-nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+#nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import pipeline
+
+# Load MobileBERT tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained("google/mobilebert-uncased")
+model = AutoModelForSequenceClassification.from_pretrained("google/mobilebert-uncased")
+
+# Create a pipeline for sentiment analysis
+nlp = pipeline("sentiment-analysis", model=model, tokenizer=tokenizer)
 
 app = Flask(__name__)
 
