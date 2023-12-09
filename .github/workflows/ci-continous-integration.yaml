@@ -3,7 +3,7 @@ name: ci-continous-integration
 on:
   push:
     branches:
-      - main
+      - development
 
 jobs:
   ci-auto-create-pr-to-production:
@@ -20,8 +20,8 @@ jobs:
       - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
-          source_branch: "main"
+          source_branch: "development"
           destination_branch: "production"
-          pr_title: "Merge main into production"
-          pr_body: "Auto-generated PR to merge main into production"
+          pr_title: "Merge development into production"
+          pr_body: "Auto-generated PR to merge development into production"
           github_token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}  # Use your PAT here
