@@ -6,8 +6,6 @@ from data_analysis_and_machine_learning import calculate_average_sentiment
 
 app = Flask(__name__)
 
-# Connect to the database
-
 
 @app.route("/", methods=["GET", "POST"])
 def main():
