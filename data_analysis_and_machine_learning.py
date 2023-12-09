@@ -10,19 +10,18 @@ def calculate_average_sentiment(team_db):
     df = pd.read_sql_query("SELECT * FROM posts", conn)
 
     # Initialize the sentiment analysis pipeline
-    nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+    nlp = pipeline('sentiment-analysis')
 
     # Perform sentiment analysis on each post and store the results
     sentiment_scores = []
-    for post in df['post_text']:
-        try:
-            result = nlp(post, truncation=True, max_length=512)[0]  # Enable truncation here
-            score = result['score'] * 100 if result['label'] == 'POSITIVE' else -(result['score'] * 100)
-            # Transform the score range from -100 to 100 to 0 to 100
-            score = (score + 100) / 2
-            sentiment_scores.append(score)
-        except Exception as e:
-            print(f"Error processing post: {e}")
+    posts = df['post_text'].tolist()
+    results = nlp(posts, truncation=True, max_length=512, padding=True)
+
+    for result in results:
+        score = result['score'] * 100 if result['label'] == 'POSITIVE' else -(result['score'] * 100)
+        # Transform the score range from -100 to 100 to 0 to 100
+        score = (score + 100) / 2
+        sentiment_scores.append(score)
 
     # Calculate the average sentiment score
     if len(sentiment_scores) > 0:
