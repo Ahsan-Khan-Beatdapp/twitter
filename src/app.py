@@ -6,7 +6,6 @@ from data_analysis_and_machine_learning import calculate_average_sentiment
 
 app = Flask(__name__)
 
-
 @app.route("/", methods=["GET", "POST"])
 def main():
     if request.method == "POST":
@@ -33,16 +32,10 @@ def main():
 
 @app.route("/echo_user_input")
 def echo_input():
-    team = request.args.get('team_db', "")
-    team_db = f"{team}.db"
+    team_db = request.args.get('team_db', "")
 
     # Calculate the average sentiment score
-    print(team_db)
-    print(type(team_db))
-
-    team_db = str(team_db)
     score = calculate_average_sentiment(team_db)
-    # Rest of your code...
     return f'''
     <style>
         body {{ background-color: #fafafa; font-family: Arial, sans-serif; }}
