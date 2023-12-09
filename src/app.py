@@ -35,15 +35,6 @@ def main():
 def echo_input():
     team = request.args.get('team_db', "")
     team_db = f"{team}.db"
-    
-    # Connect to the database
-    conn = sqlite3.connect(team_db)
-
-    # Fetch the post_text data
-    df = pd.read_sql_query("SELECT post_text FROM posts", conn)
-
-    # Close the database connection
-    conn.close()
 
     # Calculate the average sentiment score
     score = calculate_average_sentiment(team_db)
