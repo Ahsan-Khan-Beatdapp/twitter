@@ -10,10 +10,7 @@ def calculate_average_sentiment(team_db):
     df = pd.read_sql_query("SELECT * FROM posts", conn)
 
     # Initialize the sentiment analysis pipeline
-    nlp = pipeline('sentiment-analysis')
-
-    # Initialize the tokenizer
-    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+    nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
 
     # Perform sentiment analysis on each post and store the results
     sentiment_scores = []
