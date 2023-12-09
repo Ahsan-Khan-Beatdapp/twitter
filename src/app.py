@@ -40,6 +40,9 @@ def echo_input():
     # Calculate the average sentiment score
     score = calculate_average_sentiment(team_db)
 
+    # Convert the score to an integer
+    score = int(score)
+
     # Get the current date
     today = datetime.now().strftime('%Y-%m-%d')
 
@@ -53,7 +56,7 @@ def echo_input():
     </style>
     <div>
         <p class="team-name">{team_name.capitalize()} Fan Happiness Level:</p>
-        <p class="score">{score}</p>
+        <p class="score">{score}%</p>
         <p class="date">Analysis Date: {today}</p>
     </div>
     '''

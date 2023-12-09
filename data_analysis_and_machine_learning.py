@@ -1,7 +1,7 @@
+import time
 from transformers import pipeline, DistilBertTokenizer
 import sqlite3
 import pandas as pd
-
 
 def calculate_average_sentiment(team_db):
     # Connect to the database
@@ -29,6 +29,8 @@ def calculate_average_sentiment(team_db):
             score = (score + 100) / 2
             sentiment_scores.append(score)
 
+        # Introduce a delay
+        time.sleep(1)
+
     # Calculate and return the average sentiment score
     return sum(sentiment_scores) / len(sentiment_scores)
-
