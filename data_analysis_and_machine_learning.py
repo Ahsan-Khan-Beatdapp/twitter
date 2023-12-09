@@ -30,7 +30,7 @@ def calculate_average_sentiment(team_db):
             sentiment_scores.append(score)
 
         # Introduce a delay
-        time.sleep(1)
+        time.sleep(3)
 
     # Calculate and return the average sentiment score
     return sum(sentiment_scores) / len(sentiment_scores)

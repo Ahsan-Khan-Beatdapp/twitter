@@ -19,7 +19,9 @@ def main():
             select, input[type="submit"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
             input[type="submit"] { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
             input[type="submit"]:hover { background-color: #45a049; }
+            h1 { text-align: center; }
         </style>
+        <h1>Ahsan's NBA Fans Mood Calculator</h1>
         <form method="POST">
             <select name="team">
                 <option value="lakers">Lakers</option>
@@ -55,7 +57,7 @@ def echo_input():
         .date {{ font-size: 1em; color: #9E9E9E; }}
     </style>
     <div>
-        <p class="team-name">{team_name.capitalize()} Fan Happiness Level:</p>
+        <p class="team-name">{team_name.capitalize()} Fan Happiness Level Calculated Based on Data:</p>
         <p class="score">{score}%</p>
         <p class="date">Analysis Date: {today}</p>
     </div>
