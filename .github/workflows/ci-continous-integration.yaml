@@ -1,4 +1,4 @@
-name: Auto Create PR to Production
+name: ci-continous-integration
 
 on:
   push:
