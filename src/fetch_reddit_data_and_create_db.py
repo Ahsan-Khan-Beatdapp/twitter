@@ -4,47 +4,53 @@ import praw
 import sqlite3
 import pandas as pd
 
-# Reddit API credentials
+# Reddit API credentialsbu
 reddit = praw.Reddit(
     client_id="nkz3_hdkPvfyLdA3USbrSg",
     client_secret="joCDWyS5B5yBOKGZyBYdPKuwAyc_JA",
     user_agent="Living_Entire",
 )
 
-# Get posts from subreddit
-posts = reddit.subreddit("raptors").new(limit=10)
+# List of subreddits
+subreddits = ['lakers', 'celtics', 'raptors']
 
 
-# Connect to the database
-conn = sqlite3.connect('posts.db')
-c = conn.cursor()
+for subreddit in subreddits:
+    # Connect to the database
+    conn = sqlite3.connect(f'{subreddit}.db')
+    c = conn.cursor()
 
-# Create table if it doesn't exist
-c.execute('''
-    CREATE TABLE IF NOT EXISTS posts (
-        title TEXT,
-        created_at TEXT,
-        post_text TEXT
-    )
-''')
+    # Drop the 'posts' table if it exists
+    c.execute('DROP TABLE IF EXISTS posts')
 
-# THIS CODE BELOW CREATES A DATAFRAME AND PRINTS IT SIMILARLY TO THE DATABASE. For demonstration purposes only..
-# Create an empty DataFrame
-df = pd.DataFrame(columns=['title', 'created_at', 'post_text'])
-
-# Insert posts into the database
-for post in posts:
+    # Create the 'posts' table
     c.execute('''
-        INSERT INTO posts (title, created_at, post_text)
-        VALUES (?, ?, ?)
-    ''', (post.title, post.created_utc, post.selftext))
-    
-    # Append post data to DataFrame
-    df = df.append({'title': post.title, 'created_at': post.created_utc, 'post_text': post.selftext}, ignore_index=True)
+        CREATE TABLE posts (
+            title TEXT,
+            created_at REAL,
+            post_text TEXT,
+            subreddit TEXT
+        )
+    ''')
 
-# Commit changes and close connection
-conn.commit()
-conn.close()
+    # Fetch posts from the subreddit
+    posts = reddit.subreddit(subreddit).hot(limit=20)
 
-# Display the DataFrame
-print(df)
+    # Insert posts into the database
+    for post in posts:
+        c.execute('''
+            INSERT INTO posts (title, created_at, post_text, subreddit)
+            VALUES (?, ?, ?, ?)
+        ''', (post.title, post.created_utc, post.selftext, subreddit))
+
+    # Commit changes
+    conn.commit()
+
+    # Load the data from the 'posts' table into a DataFrame
+    #df = pd.read_sql_query("SELECT * FROM posts", conn)
+
+    # Print the DataFrame
+    #print(df)
+
+    # Close connection
+    conn.close()
