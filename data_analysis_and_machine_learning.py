@@ -12,10 +12,9 @@ def calculate_average_sentiment(team_db):
     posts = [row[0] for row in cursor.fetchall()]
 
     # Initialize the sentiment analysis pipeline
-    nlp = pipeline('sentiment-analysis')
-
+    nlp = pipeline('sentiment-analysis', model='textattack/albert-base-v2-stsb-mean-pooled')
     # Define a batch size
-    batch_size = 100
+    batch_size = 200
 
     # Perform sentiment analysis on each batch of posts and store the results
     sentiment_scores = []
