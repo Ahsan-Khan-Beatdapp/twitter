@@ -37,7 +37,7 @@ def echo_input():
     team_db = f"{team}.db"
 
     # Calculate the average sentiment score
-    score = calculate_average_sentiment(team_db)
+    score = calculate_average_sentiment("lakers.db")
     # Rest of your code...
     return f'''
     <style>
