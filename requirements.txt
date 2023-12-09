@@ -10,4 +10,4 @@ Werkzeug==3.0.1
 transformers
 praw
 pandas
-pytorch
+torch
