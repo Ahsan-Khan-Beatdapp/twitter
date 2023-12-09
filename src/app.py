@@ -38,7 +38,7 @@ def echo_input():
 
     # Calculate the average sentiment score
     print(team_db)
-    print(type(team_db)))
+    print(type(team_db))
 
     team_db = str(team_db)
     score = calculate_average_sentiment(team_db)
