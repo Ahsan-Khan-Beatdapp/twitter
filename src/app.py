@@ -35,7 +35,6 @@ def main():
 def echo_input():
     team = request.args.get('team_db', "")
     team_db = f"{team}.db"
-    team_db = "lakers.db"
     
     # Connect to the database
     conn = sqlite3.connect(team_db)
@@ -47,7 +46,7 @@ def echo_input():
     conn.close()
 
     # Calculate the average sentiment score
-    score = calculate_average_sentiment(df)
+    score = calculate_average_sentiment(team_db)
     # Rest of your code...
     return f'''
     <style>
