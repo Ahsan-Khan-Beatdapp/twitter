@@ -33,6 +33,7 @@ def main():
 @app.route("/echo_user_input")
 def echo_input():
     team_db = request.args.get('team_db', "")
+    team_name = team_db.split('.')[0]  # Extract team name from the database name
 
     # Calculate the average sentiment score
     score = calculate_average_sentiment(team_db)
@@ -41,9 +42,10 @@ def echo_input():
         body {{ background-color: #fafafa; font-family: Arial, sans-serif; }}
         div {{ margin: 100px auto; width: 300px; text-align: center; }}
         .score {{ font-size: 2em; color: #4CAF50; }}
+        .team-name {{ font-size: 1.5em; color: #3F51B5; font-weight: bold; }}
     </style>
     <div>
-        <p>Fan Happiness Level:</p>
+        <p class="team-name">{team_name.capitalize()} Fan Happiness Level:</p>
         <p class="score">{score}</p>
     </div>
     '''
