@@ -20,7 +20,7 @@ def calculate_average_sentiment(team_db, nlp):
     sentiment_scores = []
     for i in range(0, len(posts), batch_size):
         batch = posts[i:i+batch_size]
-        results = nlp(batch, truncation=True, max_length=512, padding=True)
+        results = nlp(batch, truncation=True, max_length=128, padding=True)
 
         for result in results:
             score = result['score'] * 100 if result['label'] == 'POSITIVE' else -(result['score'] * 100)
