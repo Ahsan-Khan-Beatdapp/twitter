@@ -1,42 +1,61 @@
 #!/usr/bin/env python3
 
 from flask import Flask, request
+from data_analysis_and_machine_learning import calculate_average_sentiment
 
 app = Flask(__name__)
 
+# Connect to the database
+conn = sqlite3.connect('posts.db')
 
-@app.route("/")
+# Fetch the post_text data
+df = pd.read_sql_query("SELECT post_text FROM posts", conn)
+
+# Close the database connection
+conn.close()
+
+# Calculate the average sentiment score
+average_score = calculate_average_sentiment(df)
+print(f'The average sentiment score is {average_score}')
+
+@app.route("/", methods=["GET", "POST"])
 def main():
-    return '''
-    <style>
-        body { background-color: #fafafa; font-family: Arial, sans-serif; }
-        form { margin: 100px auto; width: 300px; }
-        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
-        input[type="submit"] { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
-        input[type="submit"]:hover { background-color: #45a049; }
-    </style>
-    <form action="/echo_user_input" method="POST">
-        <input type="text" name="user_input" placeholder="Enter something">
-        <input type="submit" value="Echo To Screen">
-    </form>
-    '''
+    if request.method == "POST":
+        team_db = request.form.get("team") + ".db"
+        return redirect(url_for('echo_input', team_db=team_db))
+    else:
+        return '''
+        <style>
+            body { background-color: #fafafa; font-family: Arial, sans-serif; }
+            form { margin: 100px auto; width: 300px; }
+            select, input[type="submit"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+            input[type="submit"] { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+            input[type="submit"]:hover { background-color: #45a049; }
+        </style>
+        <form method="POST">
+            <select name="team">
+                <option value="lakers">Lakers</option>
+                <option value="raptors">Raptors</option>
+                <option value="celtics">Celtics</option>
+            </select>
+            <input type="submit" value="Calculate Fan Happiness Level">
+        </form>
+        '''
 
-@app.route("/echo_user_input", methods=["POST"])
+@app.route("/echo_user_input")
 def echo_input():
-    input_text = request.form.get("user_input", "")
-    return '''
+    team_db = request.args.get('team_db', "")
+    score = calculate_average_sentiment(team_db)
+    # Rest of your code...
+    return f'''
     <style>
-        body { background-color: #fafafa; font-family: Arial, sans-serif; }
-        .echo-container { margin: 50px auto; width: 300px; padding: 20px; background-color: #4CAF50; color: white; text-align: center; }
-        .output-container { margin: 50px auto; width: 300px; padding: 20px; background-color: #f0f0f0; color: #333; text-align: center; }
-        .echo-text { font-size: 20px; color: white; }
-        .user-output { font-size: 24px; color: #333; font-weight: bold; }
+        body {{ background-color: #fafafa; font-family: Arial, sans-serif; }}
+        div {{ margin: 100px auto; width: 300px; text-align: center; }}
+        .score {{ font-size: 2em; color: #4CAF50; }}
     </style>
-    <div class="echo-container">
-        <p class="echo-text">You entered:</p>
-    </div>
-    <div class="output-container">
-        <p class="user-output">''' + input_text + '''</p>
+    <div>
+        <p>Fan Happiness Level:</p>
+        <p class="score">{score}</p>
     </div>
     '''
 
