@@ -35,6 +35,7 @@ def main():
 def echo_input():
     team = request.args.get('team_db', "")
     team_db = f"{team}.db"
+    team_db = "lakers.db"
     
     # Connect to the database
     conn = sqlite3.connect(team_db)
