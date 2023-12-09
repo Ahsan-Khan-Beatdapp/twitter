@@ -3,7 +3,7 @@ from transformers import pipeline, DistilBertTokenizer
 import sqlite3
 import pandas as pd
 
-def calculate_average_sentiment(team_db):
+def calculate_average_sentiment(team_db, nlp):
     # Connect to the database
     conn = sqlite3.connect(team_db)
     # Fetch the posts
@@ -12,7 +12,7 @@ def calculate_average_sentiment(team_db):
     posts = [row[0] for row in cursor.fetchall()]
 
     # Initialize the sentiment analysis pipeline
-    nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+    #nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
     # Define a batch size
     batch_size = 10
 
