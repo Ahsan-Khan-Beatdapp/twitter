@@ -2,6 +2,7 @@
 import sqlite3
 import pandas as pd
 from flask import Flask, request, redirect, url_for
+from data_analysis_and_machine_learning import calculate_average_sentiment
 
 app = Flask(__name__)
 
@@ -10,7 +11,7 @@ import sqlite3
 import pandas as pd
 
 
-def calculate_average_sentiment(db_name):
+'''def calculate_average_sentiment(db_name):
     # Connect to the database
     conn = sqlite3.connect(db_name)
     # Load the posts into a DataFrame
@@ -42,7 +43,7 @@ def calculate_average_sentiment(db_name):
         print("No posts were processed.")
         return None
 
-
+'''
 
 @app.route("/", methods=["GET", "POST"])
 def main():
