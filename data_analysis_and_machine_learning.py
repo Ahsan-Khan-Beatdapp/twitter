@@ -3,9 +3,9 @@ import sqlite3
 import pandas as pd
 
 
-def calculate_average_sentiment(db_name):
+def calculate_average_sentiment(team_db):
     # Connect to the database
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(team_db)
     # Load the posts into a DataFrame
     df = pd.read_sql_query("SELECT * FROM posts", conn)
 
