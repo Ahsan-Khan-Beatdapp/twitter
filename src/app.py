@@ -29,6 +29,7 @@ def main():
             <title>Ahsan's NBA Fan Mood Level</title>
         </head>
         <body>
+            <h1 style="text-align: center;">Ahsan's NBA Fan Mood Level</h1>
             <style>
                 body { background-color: #fafafa; font-family: Arial, sans-serif; }
                 form { margin: 100px auto; width: 300px; }
@@ -43,7 +44,7 @@ def main():
                 <input type="submit" value="Calculate Fan Happiness">
             </form>
             <form action="/update" method="post">
-                <p>Click The Button Below To Update Data To Most Recent</p>
+                <p style="text-align: center;">Click The Button Below To Update Data To Most Recent</p>
                 <input type="submit" value="Update Data">
             </form>
         </body>
