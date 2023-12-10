@@ -17,30 +17,36 @@ def update_data():
     fetch_data_and_create_db()
     return redirect(url_for('main'))
 
-@app.route("/", methods=["GET", "POST"])
+@@app.route("/", methods=["GET", "POST"])
 def main():
     if request.method == "POST":
         team_db = request.form.get("team") + ".db"
         return redirect(url_for('display_mood', team_db=team_db))
     else:
         return '''
-        <style>
-            body { background-color: #fafafa; font-family: Arial, sans-serif; }
-            form { margin: 100px auto; width: 300px; }
-            select, input[type="submit"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
-        </style>
-        <form action="/" method="post">
-            <select name="team">
-                <option value="lakers">Lakers</option>
-                <option value="celtics">Celtics</option>
-                <option value="raptors">Raptors</option>
-            </select>
-            <input type="submit" value="Submit">
-        </form>
-        <form action="/update" method="post">
-            <input type="submit" value="Update Data">
-        </form>
-        '''
+        <html>
+        <head>
+            <title>Ahsan's NBA Fan Mood Level</title>
+        </head>
+        <body>
+            <style>
+                body { background-color: #fafafa; font-family: Arial, sans-serif; }
+                form { margin: 100px auto; width: 300px; }
+                select, input[type="submit"] { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
+            </style>
+            <form action="/" method="post">
+                <select name="team">
+                    <option value="lakers">Lakers</option>
+                    <option value="celtics">Celtics</option>
+                    <option value="raptors">Raptors</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+            <form action="/update" method="post">
+                <p>Click the button below to update data to most recent</p>
+                <input type="submit" value="Update Data">
+            </form>
+            '''
 
 @app.route("/fan-happiness-level")
 def display_mood():
