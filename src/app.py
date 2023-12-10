@@ -3,6 +3,7 @@ import sqlite3
 import pandas as pd
 from flask import Flask, request, redirect, url_for
 from data_analysis_and_machine_learning import calculate_average_sentiment
+from fetch_reddit_data_and_create_db import fetch_data_and_create_db
 #from transformers import pipeline
 
 # Load the model once when your application starts
