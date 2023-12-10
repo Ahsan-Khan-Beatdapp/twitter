@@ -34,7 +34,7 @@ def fetch_data_and_create_db():
         ''')
 
         # Fetch posts from the subreddit
-        posts = reddit.subreddit(subreddit).hot(limit=2000)
+        posts = reddit.subreddit(subreddit).new(limit=1000)
 
         # Insert posts into the database
         for post in posts:
@@ -47,10 +47,10 @@ def fetch_data_and_create_db():
         conn.commit()
 
         # Load the data from the 'posts' table into a DataFrame
-        #df = pd.read_sql_query("SELECT * FROM posts", conn)
+        df = pd.read_sql_query("SELECT * FROM posts", conn)
 
         # Print the DataFrame
-        #print(df)
+        print(df.shape[0])
 
         # Close connection
         conn.close()
