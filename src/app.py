@@ -3,10 +3,10 @@ import sqlite3
 import pandas as pd
 from flask import Flask, request, redirect, url_for
 from data_analysis_and_machine_learning import calculate_average_sentiment
-from transformers import pipeline
+#from transformers import pipeline
 
 # Load the model once when your application starts
-nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+#nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
 
 app = Flask(__name__)
 
@@ -44,7 +44,7 @@ def echo_input():
     team_name = team_db.split('.')[0]  # Extract team name from the database name
 
     # Calculate the average sentiment score
-    score = calculate_average_sentiment(team_db, nlp)
+    score = calculate_average_sentiment(team_db)
 
     # Convert the score to an integer
     score = int(score)
