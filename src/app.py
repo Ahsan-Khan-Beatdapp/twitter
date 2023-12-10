@@ -40,12 +40,14 @@ def main():
                     <option value="celtics">Celtics</option>
                     <option value="raptors">Raptors</option>
                 </select>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Calculate Fan Happiness">
             </form>
             <form action="/update" method="post">
-                <p>Click the button below to update data to most recent</p>
+                <p>Click The Button Below To Update Data To Most Recent</p>
                 <input type="submit" value="Update Data">
             </form>
+        </body>
+        </html>
             '''
 
 @app.route("/fan-happiness-level")
