@@ -1,37 +1,35 @@
+import time
 from transformers import pipeline, DistilBertTokenizer
 import sqlite3
 import pandas as pd
 
-
-def calculate_average_sentiment(team_db):
+def calculate_average_sentiment(team_db, nlp):
     # Connect to the database
     conn = sqlite3.connect(team_db)
-    # Load the posts into a DataFrame
-    df = pd.read_sql_query("SELECT * FROM posts", conn)
+    # Fetch the posts
+    cursor = conn.cursor()
+    cursor.execute("SELECT post_text FROM posts")
+    posts = [row[0] for row in cursor.fetchall()]
 
     # Initialize the sentiment analysis pipeline
-    nlp = pipeline('sentiment-analysis')
+    #nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
+    # Define a batch size
+    batch_size = 10
 
-    # Initialize the tokenizer
-    tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
-
-    # Perform sentiment analysis on each post and store the results
+    # Perform sentiment analysis on each batch of posts and store the results
     sentiment_scores = []
-    for post in df['post_text']:
-        try:
-            result = nlp(post, truncation=True, max_length=512)[0]  # Enable truncation here
+    for i in range(0, len(posts), batch_size):
+        batch = posts[i:i+batch_size]
+        results = nlp(batch, truncation=True, max_length=512, padding=True)
+
+        for result in results:
             score = result['score'] * 100 if result['label'] == 'POSITIVE' else -(result['score'] * 100)
             # Transform the score range from -100 to 100 to 0 to 100
             score = (score + 100) / 2
             sentiment_scores.append(score)
-        except Exception as e:
-            print(f"Error processing post: {e}")
 
-    # Calculate the average sentiment score
-    if len(sentiment_scores) > 0:
-        average_score = sum(sentiment_scores) / len(sentiment_scores)
-        return average_score
-    else:
-        print("No posts were processed.")
-        return None
+        # Introduce a delay
+        #time.sleep(3)
 
+    # Calculate and return the average sentiment score
+    return sum(sentiment_scores) / len(sentiment_scores)
