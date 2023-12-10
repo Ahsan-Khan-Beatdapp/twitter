@@ -26,10 +26,10 @@ def main():
         return '''
         <html>
         <head>
-            <title>Ahsan's NBA Fan Mood Level</title>
+            <title>CU MSCS Final Project</title>
         </head>
         <body>
-            <h1 style="text-align: center;">Ahsan's NBA Fan Mood Level</h1>
+            <h1 style="text-align: center;">Muhammad Ahsan Khan's Sport Fan Mood Analyzer</h1>
             <style>
                 body { background-color: #fafafa; font-family: Arial, sans-serif; }
                 form { margin: 100px auto; width: 300px; }
