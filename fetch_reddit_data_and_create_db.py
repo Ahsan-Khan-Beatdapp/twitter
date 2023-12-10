@@ -34,7 +34,7 @@ def fetch_data_and_create_db():
         ''')
 
         # Fetch posts from the subreddit
-        posts = reddit.subreddit(subreddit).hot(limit=200)
+        posts = reddit.subreddit(subreddit).hot(limit=2000)
 
         # Insert posts into the database
         for post in posts:

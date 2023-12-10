@@ -17,7 +17,7 @@ def calculate_average_sentiment(team_db):
     # Initialize the sentiment analysis pipeline
     #nlp = pipeline('sentiment-analysis', model='distilbert-base-uncased-finetuned-sst-2-english')
     # Define a batch size
-    batch_size = 10
+    batch_size = 128
 
     # Perform sentiment analysis on each batch of posts and store the results
     sentiment_scores = []
@@ -28,7 +28,6 @@ def calculate_average_sentiment(team_db):
 
         for post in batch:
             polarity_scores = sia.polarity_scores(post)
-            # The 'compound' score is computed by summing the valence scores of each word in the lexicon, adjusted according to the rules, and then normalized to be between -1 (most extreme negative) and +1 (most extreme positive). This is the most useful metric if you want a single unidimensional measure of sentiment for a given sentence. Calling it a 'normalized, weighted composite score' is accurate.
             # Transform the score range from -1 to 1 to 0 to 100
             score = (polarity_scores['compound'] + 1) * 50
             sentiment_scores.append(score)
