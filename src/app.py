@@ -17,7 +17,7 @@ def update_data():
     fetch_data_and_create_db()
     return redirect(url_for('main'))
 
-@@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def main():
     if request.method == "POST":
         team_db = request.form.get("team") + ".db"
