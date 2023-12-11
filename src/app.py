@@ -44,7 +44,7 @@ def main():
                 <input type="submit" value="Calculate Fan Happiness">
             </form>
             <form action="/update" method="post">
-                <p style="text-align: center;">Click The Button Below To Update Data To Most Recent</p>
+                <p style="text-align: center;">Click The Button Below To Update Data To Most Recent (May take few seconds)</p>
                 <input type="submit" value="Update Data">
             </form>
         </body>
