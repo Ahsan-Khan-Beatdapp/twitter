@@ -1,0 +1,3 @@
+The integration test will check whether the '/fan-hapiness-level' route is sucessful using coded responses from a mock visiting of the web app.
+
+In your terminal CD run python integration_test.py

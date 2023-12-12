@@ -1,5 +1,4 @@
 import time
-#from transformers import pipeline, DistilBertTokenizer
 import sqlite3
 import pandas as pd
 import nltk

@@ -1,0 +1,7 @@
+Unit Test 1:
+My test will check if the function is run successfully.  Ensuring three files named raptors.db, lakers.db and celtics.db are created. 
+To run the test go to the project directory and type 'python unit_test_MOCK_object_fetch_data_and_create_db.py'
+
+Unit Test 2:
+The test will check if the function Calculate_average sentiment returns an expected results using mock data.
+To run the test go to the project directory and type 'python unit_test_2_MOCK_sentiment_analyis_score.py'

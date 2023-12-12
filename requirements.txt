@@ -10,3 +10,4 @@ Werkzeug==3.0.1
 praw
 pandas
 nltk
+pytest

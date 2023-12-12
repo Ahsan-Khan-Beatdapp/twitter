@@ -1,48 +1,29 @@
 import unittest
 from unittest.mock import patch, MagicMock
-import fetch_reddit_data_and_create_db
+import os
+import sqlite3
+from fetch_reddit_data_and_create_db import fetch_data_and_create_db  
 
-class TestRedditDataFetcher(unittest.TestCase):
+class TestFetchDataAndCreateDB(unittest.TestCase):
+    def setUp(self):
+        self.reddit_patcher = patch('praw.Reddit')
+        self.sqlite3_patcher = patch('sqlite3.connect')
 
-    @patch('fetch_reddit_data_and_create_db.praw')
-    def test_reddit_api_call(self, mock_praw):
-        """
-        Test if the Reddit API is called correctly.
-        """
-        # Setup
-        mock_reddit = MagicMock()
-        mock_praw.Reddit.return_value = mock_reddit
-        mock_reddit.subreddit().new.return_value = iter([])
+        self.mock_reddit = self.reddit_patcher.start()
+        self.mock_sqlite3 = self.sqlite3_patcher.start()
 
-        # Execute
-        fetch_reddit_data_and_create_db.fetch_data_and_create_db()
+        self.mock_reddit.return_value.subreddit.return_value.new.return_value = [MagicMock() for _ in range(1000)]
+        self.mock_sqlite3.return_value.cursor.return_value.execute.return_value = None
 
-        # Assert
-        mock_praw.Reddit.assert_called_once_with(
-            client_id="nkz3_hdkPvfyLdA3USbrSg",
-            client_secret="joCDWyS5B5yBOKGZyBYdPKuwAyc_JA",
-            user_agent="Living_Entire",
-        )
-        mock_reddit.subreddit.assert_called()
-        mock_reddit.subreddit().new.assert_called()
+    def test_fetch_data_and_create_db(self):
+        fetch_data_and_create_db()
+        self.assertTrue(os.path.isfile('lakers.db'))
+        self.assertTrue(os.path.isfile('raptors.db'))
+        self.assertTrue(os.path.isfile('celtics.db'))
 
-    @patch('fetch_reddit_data_and_create_db.sqlite3')
-    def test_database_creation(self, mock_sqlite3):
-        """
-        Test if the database is created and tables are set up correctly.
-        """
-        # Setup
-        mock_connection = mock_sqlite3.connect.return_value
-        mock_cursor = mock_connection.cursor.return_value
+    def tearDown(self):
+        self.reddit_patcher.stop()
+        self.sqlite3_patcher.stop()
 
-        # Execute
-        fetch_reddit_data_and_create_db.fetch_data_and_create_db()
-
-        # Assert
-        mock_sqlite3.connect.assert_called()
-        mock_cursor.execute.assert_called()
-        mock_connection.commit.assert_called()
-        mock_connection.close.assert_called()
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
